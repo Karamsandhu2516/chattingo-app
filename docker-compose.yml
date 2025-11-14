@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: chattingo-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: chattingo_db
+      MYSQL_USER: chattingo
+      MYSQL_PASSWORD: chattingo123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - chattingo-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    container_name: backend-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/chattingo_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root123
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    networks:
+      - chattingo-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    container_name: frontend-service
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+    networks:
+      - chattingo-network
+
+volumes:
+  mysql_data:
+
+networks:
+  chattingo-network:
+    driver: bridge

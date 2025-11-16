@@ -22,9 +22,10 @@ services:
       dockerfile: dockerfile
     container_name: backend-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/chattingo_db
+      SPRING_DATASOURCE_URL: jdbc:mysql://chattingo-db:3306/chattingo_db
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root123
+      JWT_SECRET: "1MtHpRdPVgaULW3qzqBvlUcZmYGHWsytBu4dn8MK7PM="
     ports:
       - "8080:8080"
     depends_on:

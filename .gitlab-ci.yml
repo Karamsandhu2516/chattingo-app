@@ -1,14 +1,17 @@
 image: node:18-alpine
 
+stages:
+  - build
+
 build:
   stage: build
   script:
+    - cd frontend
     - npm install
     - npm run build
   artifacts:
     paths:
-      - dist/
-      - node_modules/
+      - frontend/dist/
 
 
 

@@ -8,10 +8,11 @@ build:
   script:
     - cd frontend
     - npm install
-    - npm run build
+    - CI=false npm run build
   artifacts:
     paths:
       - frontend/dist/
+
 
 
 

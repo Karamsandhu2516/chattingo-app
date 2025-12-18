@@ -1,18 +1,20 @@
-image: node:18-alpine
-
+image: docker:24.0.5
+services:
+  - docker:24.0.5-dind
+variables:
+  DOCKER_TLS_CERTDIR: ""
 stages:
   - build
-
-build:
+  - test
+build_images:
   stage: build
   script:
-    - cd frontend
-    - npm install
-    - CI=false npm run build
-  artifacts:
-    paths:
-      - frontend/dist/
-
-
-
-
+    - docker compose build
+test_startup:
+  stage: test
+  script:
+    - docker compose up -d
+    - sleep 30
+    - docker ps
+    - docker compose logs backend
+    - docker compose down 

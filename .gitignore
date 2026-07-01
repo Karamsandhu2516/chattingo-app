@@ -101,3 +101,10 @@ application.log
 # Temporary Maven files
 dependency-reduced-pom.xml
 email_system
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+crash.log

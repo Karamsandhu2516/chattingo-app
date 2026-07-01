@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:   
+    metadata:
+        labels:
+           app: backend
+    spec:
+      containers:
+      - name: backend-service
+        image: 387994677123.dkr.ecr.us-east-1.amazonaws.com/backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://terraform-20260701121828922900000001.cobyy2me43yl.us-east-1.rds.amazonaws.com:3306/chattingo_db"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "chattingo"
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "chattingo123" 
+        - name: JWT_SECRET
+          value: "1MtHpRdPVgaULW3qzqBvlUcZmYGHWsytBu4dn8MK7PM="

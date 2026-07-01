@@ -1,0 +1,25 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend-service
+        image: 387994677123.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
+        ports:
+        - containerPort: 80
+        env:                               # <-- Add this line aligned with ports
+        - name: REACT_APP_API_URL          # <-- Add this line
+          value: "http://a817e49e49ce94d3c811a4c67ef09d0b-193910091.us-east-1.elb.amazonaws.com:8080" # <-- Add this line

@@ -17,7 +17,7 @@ services:
       - chattingo-network
     # --- ADDED HEALTHCHECK FOR DB READINESS ---
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -29,10 +29,10 @@ services:
       dockerfile: dockerfile
     container_name: backend-service
     environment:
-      # NOTE: Using 'root' user for convenience, but 'chattingo' user is better practice.
-      SPRING_DATASOURCE_URL: jdbc:mysql://chattingo-db:3306/chattingo_db
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root123
+      # These fallback to your local DB defaults if they aren't provided by the OS
+      SPRING_DATASOURCE_URL: ${DB_URL:-jdbc:mysql://chattingo-db:3306/chattingo_db}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-root}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-root123}
       JWT_SECRET: "1MtHpRdPVgaULW3qzqBvlUcZmYGHWsytBu4dn8MK7PM="
     ports:
       - "8080:8080"
